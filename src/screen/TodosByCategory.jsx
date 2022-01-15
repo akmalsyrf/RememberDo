@@ -6,7 +6,8 @@ import API from "../config/API";
 
 import ModalAdd from "../components/ModalAddTodo";
 
-export default function Todos({ navigation }) {
+export default function TodosByCategory({ route, navigation }) {
+  const { idCategory, name } = route.params;
   const theme = useTheme();
   const [isLoading, setIsLoading] = useState();
   const [showModalAdd, setShowModalAdd] = useState(false);
@@ -15,7 +16,7 @@ export default function Todos({ navigation }) {
   const getAllTodos = async () => {
     try {
       setIsLoading(true);
-      const response = await API.get("/todos");
+      const response = await API.get(`/todos/${idCategory}`);
       // console.log(response.data.data);
       setList(response.data.data);
       setIsLoading(false);
@@ -47,7 +48,7 @@ export default function Todos({ navigation }) {
 
       let body;
       list.map((li) => {
-        if (li.id == id) {
+        if (li.id == 6) {
           if (Boolean(li.isCompleted)) {
             body = JSON.stringify({ isCompleted: null });
           } else {
@@ -69,7 +70,7 @@ export default function Todos({ navigation }) {
       title: item.title,
       description: item.description,
       dueDate: item.dueDate,
-      category: item.category.name,
+      category: name,
     });
   };
 
@@ -108,7 +109,7 @@ export default function Todos({ navigation }) {
   return (
     <Box flex={1}>
       <Heading p="5" borderBottomWidth="2" borderColor="coolGray.200" pb={5} fontSize={30} color={theme.colors.primary["900"]} style={{ fontWeight: "bold" }}>
-        All Task
+        {name}
       </Heading>
       {list.length !== 0 ? (
         <FlatList m={5} data={list} renderItem={_renderItem} keyExtractor={(item) => item.id.toString()} refreshing={isLoading} onRefresh={getAllTodos} />

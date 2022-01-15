@@ -12,7 +12,7 @@ export default function Home({ navigation }) {
         I will remember Your To Do !
       </Text>
       <Image source={require("../assets/ico.png")} alt="home page" size={300} marginBottom="10" />
-      <Button bg={theme.colors.primary["900"]} size="lg" onPress={() => navigation.navigate("Todos")}>
+      <Button bg={theme.colors.primary["900"]} size="lg" onPress={() => navigation.navigate("Navigation")}>
         Get Started!
       </Button>
     </Center>

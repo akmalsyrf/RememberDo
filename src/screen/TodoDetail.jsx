@@ -3,7 +3,7 @@ import { useTheme, Box, Heading, Text, HStack, VStack } from "native-base";
 
 export default function Todo({ route, navigation }) {
   const theme = useTheme();
-  const { idTodo, title, description, dueDate } = route.params;
+  const { idTodo, title, description, dueDate, category } = route.params;
   const date = new Date(dueDate);
   const finalDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
   return (
@@ -18,7 +18,7 @@ export default function Todo({ route, navigation }) {
         </VStack>
       </HStack>
       <Text my={2} mx={5} style={{ fontWeight: "bold" }}>
-        Category : None
+        Category : {category}
       </Text>
       <Text my={2} mx={5}>
         {description}

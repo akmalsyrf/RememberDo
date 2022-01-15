@@ -47,7 +47,7 @@ export default function App() {
 
   return (
     <NativeBaseProvider theme={theme}>
-      {/* <StatusBar /> */}
+      <StatusBar />
       <Box flex={1} backgroundColor="#fff">
         <Container />
       </Box>

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Input, Modal, FormControl, Button, TextArea, Pressable } from "native-base";
+import React, { useEffect, useState } from "react";
+import { Input, Modal, FormControl, Button, TextArea, Pressable, Select, CheckIcon } from "native-base";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import API from "../config/API";
 
-export default function ModalAdd({ props }) {
+export default function ModalAddTodo({ props }) {
   const { showModalAdd, setShowModalAdd, getAllTodos } = props;
   const now = Date.now();
   const initDate = new Date(now);
@@ -14,18 +14,34 @@ export default function ModalAdd({ props }) {
     title: "",
     description: "",
     dueDate: `${initDate.getFullYear()}-${initDate.getMonth() + 1}-${initDate.getDate()}`,
+    idCategory: 1,
   });
   // console.log(form.dueDate);
 
   //handle input date
   const [date, setDate] = useState(initDate);
   const dueDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-  const onChange = (event, selectedDate) => {
+  const onChangeDate = (event, selectedDate) => {
     const currentDate = selectedDate || initDate;
     setShowDate(Platform.OS === "ios");
     setDate(currentDate);
     setForm({ ...form, dueDate: dueDate });
   };
+
+  //handle category
+  const [category, setCategory] = useState([]);
+  const getCategories = async () => {
+    try {
+      const response = await API.get("/categories");
+      setCategory(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
 
   const handleSubmit = async () => {
     try {
@@ -60,7 +76,26 @@ export default function ModalAdd({ props }) {
                 {form.dueDate}
               </FormControl.Label>
             </Pressable>
-            {showDate && <DateTimePicker testID="dateTimePicker" value={date} mode="date" is24Hour={true} display="default" onChange={onChange} />}
+            {showDate && <DateTimePicker testID="dateTimePicker" value={date} mode="date" is24Hour={true} display="default" onChange={onChangeDate} />}
+          </FormControl>
+          <FormControl mt="3">
+            <FormControl.Label>Category</FormControl.Label>
+            <Select
+              selectedValue={form.idCategory}
+              minWidth="200"
+              accessibilityLabel="Choose category"
+              placeholder="Choose category"
+              _selectedItem={{
+                bg: "teal.600",
+                endIcon: <CheckIcon size="5" />,
+              }}
+              mt={1}
+              onValueChange={(idCategory) => setForm({ ...form, idCategory })}
+            >
+              {category.map((ctg, i) => {
+                return <Select.Item label={ctg.name} value={ctg.id} key={i} />;
+              })}
+            </Select>
           </FormControl>
           <FormControl mt="3">
             <FormControl.Label>Description</FormControl.Label>
