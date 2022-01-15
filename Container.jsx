@@ -12,6 +12,7 @@ const Tab = createBottomTabNavigator();
 // Import screen
 import Home from "./src/screen/Home";
 import Todos from "./src/screen/Todos";
+import Todo from "./src/screen/TodoDetail";
 
 export default function Container() {
   const theme = useTheme();
@@ -24,31 +25,18 @@ export default function Container() {
           options={{
             headerShown: false,
           }}
-          // options={{
-          //   title: "Home",
-          //   headerStyle: {
-          //     backgroundColor: theme.colors.primary["600"],
-          //   },
-          //   headerTintColor: "white",
-          //   headerTitleStyle: {
-          //     fontSize: 16,
-          //   },
-          // }}
         />
         <Stack.Screen
           name="Todos"
           component={Todos}
           options={{
             title: "RememberDo",
-            // headerStyle: {
-            //   backgroundColor: theme.colors.primary["600"],
-            // },
-            // headerTintColor: "white",
             headerTitleStyle: {
               fontSize: 20,
             },
           }}
         />
+        <Stack.Screen name="Todo" component={Todo} options={({ route }) => ({ title: route.params.title })} />
       </Stack.Navigator>
     </NavigationContainer>
   );

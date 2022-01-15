@@ -11,7 +11,7 @@ export default function Home({ navigation }) {
       <Text fontSize={20} marginBottom="25" color="#164e63" style={{ fontWeight: "bold" }}>
         I will remember Your To Do !
       </Text>
-      <Image source={require("../assets/ico.png")} alt="home page" size={300} marginBottom="20" />
+      <Image source={require("../assets/ico.png")} alt="home page" size={300} marginBottom="10" />
       <Button bg={theme.colors.primary["900"]} size="lg" onPress={() => navigation.navigate("Todos")}>
         Get Started!
       </Button>
