@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useTheme, IconButton, Checkbox, Text, Box, VStack, HStack, Heading, Button, Image, Center, Pressable, FlatList } from "native-base";
-import { Entypo } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 import API from "../config/API";
 
 import ModalAdd from "../components/ModalAddTodo";
+import RenderItem from "../components/Todos-TodosByCategory/RenderItem";
 
 export default function TodosByCategory({ route, navigation }) {
   const { idCategory, name } = route.params;
@@ -85,25 +86,8 @@ export default function TodosByCategory({ route, navigation }) {
   const modalAddProps = { showModalAdd, setShowModalAdd, getAllTodos };
 
   const _renderItem = ({ item }) => {
-    return (
-      <Box borderBottomWidth="1" borderColor="coolGray.200" pl="1" pr="5" pb="2">
-        <HStack w="100%" justifyContent="space-between" alignItems="center">
-          <Checkbox isChecked={item.isCompleted} onChange={() => handleStatusChange(item.id)} value={item.title}>
-            <IconButton size="lg" colorScheme="trueGray" icon={<Entypo name="cross" size={30} color={theme.colors.primary["900"]} />} onPress={() => handleDelete(item.id)} />
-            <Pressable onPress={() => navigateToDetail(item)} w="100%">
-              <VStack>
-                <Text mx="1" strikeThrough={item.isCompleted} color={item.isCompleted ? "gray.400" : "coolGray.800"} fontSize={20} bold>
-                  {item.title}
-                </Text>
-                <Text mx="1" strikeThrough={item.isCompleted} color={item.isCompleted ? "gray.400" : "coolGray.800"}>
-                  {cutDescription(item.description)}
-                </Text>
-              </VStack>
-            </Pressable>
-          </Checkbox>
-        </HStack>
-      </Box>
-    );
+    const funcProps = { handleStatusChange, handleDelete, cutDescription, navigateToDetail };
+    return <RenderItem funcProps={funcProps} item={item} />;
   };
 
   return (
@@ -129,9 +113,7 @@ export default function TodosByCategory({ route, navigation }) {
 
       {/* modal */}
       <Button onPress={() => setShowModalAdd(true)} size={60} position="absolute" borderRadius={50} alignItems="center" bottom={5} right={5}>
-        <Text fontSize={30} color="white">
-          +
-        </Text>
+        <Ionicons name="ios-add" size={30} color="white" />
       </Button>
       <ModalAdd props={modalAddProps} />
     </Box>

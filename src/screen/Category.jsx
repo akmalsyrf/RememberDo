@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTheme, IconButton, Text, Box, VStack, HStack, Heading, Button, Image, Center, Pressable, FlatList } from "native-base";
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, Ionicons } from "@expo/vector-icons";
 
 import API from "../config/API";
 
@@ -77,9 +77,7 @@ export default function Categories({ navigation }) {
 
       {/* modal */}
       <Button onPress={() => setShowModalAdd(true)} size={60} position="absolute" borderRadius={50} alignItems="center" bottom={5} right={5}>
-        <Text fontSize={30} color="white">
-          +
-        </Text>
+        <Ionicons name="ios-add" size={30} color="white" />
       </Button>
       <ModalAdd props={modalAddProps} />
     </Box>

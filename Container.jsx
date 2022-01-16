@@ -15,6 +15,7 @@ import Home from "./src/screen/Home";
 import Todos from "./src/screen/Todos";
 import TodosByCategory from "./src/screen/TodosByCategory";
 import TodoDetail from "./src/screen/TodoDetail";
+import Calendar from "./src/screen/Calendar";
 import Category from "./src/screen/Category";
 import Profile from "./src/screen/Profile";
 
@@ -36,6 +37,8 @@ function buttonTab() {
             iconName = focused ? "ios-checkmark-circle" : "ios-checkmark-circle-outline";
           } else if (route.name == "Category") {
             iconName = focused ? "ios-bookmark" : "ios-bookmark-outline";
+          } else if (route.name == "Calendar") {
+            iconName = focused ? "ios-calendar" : "ios-calendar-outline";
           } else if (route.name == "Profile") {
             iconName = focused ? "ios-happy" : "ios-happy-outline";
           }
@@ -48,6 +51,7 @@ function buttonTab() {
     >
       <Tab.Screen name="Todos" component={Todos} />
       <Tab.Screen name="Category" component={Category} />
+      <Tab.Screen name="Calendar" component={Calendar} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
