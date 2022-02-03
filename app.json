@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "RN-todo",
-    "slug": "RN-todo",
+    "name": "RememberDo",
+    "slug": "RememberDo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
@@ -18,6 +18,8 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.yourcompany.rememberdo",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
