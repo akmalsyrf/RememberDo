@@ -2,7 +2,7 @@ import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { useFonts, Poppins_400Regular, Poppins_400Regular_Italic } from "@expo-google-fonts/poppins";
 
-import { extendTheme, NativeBaseProvider, Box, Text } from "native-base";
+import { extendTheme, NativeBaseProvider, Box } from "native-base";
 
 import Container from "./Container";
 

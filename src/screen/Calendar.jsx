@@ -1,15 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Center, Heading, useTheme, Button, Text } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 
+import API from "../config/API";
+
 export default function CalendarDisplay() {
+  //get all todos
+  const [todos, setTodos] = useState([]);
+  const getAllTodos = async () => {
+    const response = await API.get("/todos");
+    setTodos(response.data.data);
+  };
+  useEffect(() => {
+    getAllTodos();
+  }, []);
+
+  const dateStyling = {
+    blueDots: { marked: true },
+    redDots: { marked: true, dotColor: "red" },
+    greenDots: { marked: true, dotColor: "green" },
+    pullCircle: { selected: true },
+  };
+
+  const dueDate = todos.map((todo) => {
+    const date = new Date(todo.dueDate);
+    return `${date.getFullYear()}-${date.getMonth() < 10 ? 0 : null}${date.getMonth() + 1}-${date.getDate()}`;
+  });
+  console.log(dueDate);
+
+  //assign dueDate and dateStyling to object
+  const markedDates = dueDate.reduce((acc, curr) => ({ ...acc, [curr]: dateStyling.pullCircle }), {});
+  // console.log(markedDates);
+
   const theme = useTheme();
 
   const [customDate, setCustomDate] = useState("");
   const todayDate = new Date().toISOString().slice(0, 10);
   const selectedDate = customDate ? customDate : todayDate;
-  // console.log(selectedDate);
+  console.log(selectedDate);
+
   return (
     <Box flex={1}>
       <Center>
@@ -18,13 +48,8 @@ export default function CalendarDisplay() {
         </Heading>
       </Center>
       <CalendarList
-        current={todayDate}
-        markedDates={{
-          "2022-01-19": { selected: true, endingDay: true, color: "green", textColor: "gray" },
-          "2022-01-17": { marked: true },
-          "2022-01-18": { marked: true, dotColor: "red", activeOpacity: 0 },
-          "2022-01-19": { disabled: true, startingDay: true, color: "green", endingDay: true },
-        }}
+        current={selectedDate}
+        markedDates={markedDates}
         // Callback which gets executed when visible months change in scroll view. Default = undefined
         onVisibleMonthsChange={(months) => {}}
         // Max amount of months allowed to scroll to the past. Default = 50
@@ -36,7 +61,10 @@ export default function CalendarDisplay() {
         // Enable or disable vertical scroll indicator. Default = false
         showScrollIndicator={true}
       />
-      <Button onPress={() => setCustomDate("2012-01-01")} size={60} position="absolute" borderRadius={50} alignItems="center" bottom={5} right={5}>
+      <Button onPress={() => setCustomDate(todayDate)} bg="red.500" size={50} position="absolute" borderRadius={50} alignItems="center" bottom={20} right={6}>
+        <Ionicons name="ios-disc-outline" size={20} color="white" />
+      </Button>
+      <Button onPress={() => setCustomDate("2020-01-01")} size={60} position="absolute" borderRadius={50} alignItems="center" bottom={4} right={5}>
         <Ionicons name="ios-calendar" size={30} color="white" />
       </Button>
     </Box>

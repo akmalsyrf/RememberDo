@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTheme, IconButton, Text, Box, VStack, HStack, Heading, Button, Image, Center, Pressable, FlatList } from "native-base";
-import { Entypo, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 import API from "../config/API";
 
@@ -41,11 +41,14 @@ export default function Categories({ navigation }) {
     return (
       <Box borderBottomWidth="1" borderColor="coolGray.200" pl="1" pr="5" pb="2">
         <HStack w="100%" justifyContent="space-between" alignItems="center">
-          <IconButton size="lg" colorScheme="trueGray" icon={<Entypo name="folder" size={30} color={theme.colors.primary["900"]} />} />
+          <IconButton size="lg" colorScheme="trueGray" icon={<Ionicons name="ios-bookmark-outline" size={30} color={theme.colors.primary["900"]} />} />
           <Pressable onPress={() => navigateToTodosByCategory(item)} w="100%">
             <VStack>
               <Text mx="1" color="coolGray.800" fontSize={20} bold>
                 {item.name}
+              </Text>
+              <Text mx="1" color="coolGray.800">
+                Tap to see all contents
               </Text>
             </VStack>
           </Pressable>
