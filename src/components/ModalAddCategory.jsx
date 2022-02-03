@@ -17,6 +17,7 @@ export default function ModalAddCategory({ props }) {
       const response = await API.post("/category", body, config);
       //   console.log(response.data.data);
       getCategories();
+      setCategoryName("");
     } catch (error) {
       console.log(error);
     }

@@ -54,6 +54,12 @@ export default function ModalAddTodo({ props }) {
       const response = await API.post("/todo", body, config);
       // console.log(response.data.data);
       getAllTodos();
+      setForm({
+        title: "",
+        description: "",
+        dueDate: `${initDate.getFullYear()}-${initDate.getMonth() + 1}-${initDate.getDate()}`,
+        idCategory: 1,
+      });
     } catch (error) {
       console.log(error);
     }
